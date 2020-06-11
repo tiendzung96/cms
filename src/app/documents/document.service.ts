@@ -19,11 +19,13 @@ export class DocumentService {
   }
 
   getDocument(id: string): Document{
-    for (const document of this.documents){
-      if (document.id === id){
-        return document;
-      }
-    }
-    return null;
+    // for (const document of this.documents){
+    //   if (document.id === id){
+    //     return document;
+    //   }
+    // }
+    // return null;
+    return this.documents[parseInt(id, 10)];
+
   }
 }
