@@ -7,7 +7,6 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./document-edit.component.css']
 })
 export class DocumentEditComponent implements OnInit {
-  id: number;
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
