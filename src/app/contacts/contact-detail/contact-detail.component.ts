@@ -14,6 +14,15 @@ export class ContactDetailComponent implements OnInit {
 
   constructor(private contactService: ContactService, private route: ActivatedRoute, private router: Router) { }
 
+  onEditContact(){
+    this.router.navigate(['edit'], {relativeTo: this.route});
+  }
+
+  onDelete(){
+    this.contactService.deleteContact(this.contact);
+    this.router.navigate(['contacts']);
+  }
+
   ngOnInit() {
     this.route.params
     .subscribe(

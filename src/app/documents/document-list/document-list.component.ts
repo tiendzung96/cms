@@ -25,7 +25,4 @@ export class DocumentListComponent implements OnInit {
       this.documents = documents;
     })
   }
-
-
-
 }
