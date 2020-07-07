@@ -22,10 +22,14 @@ export class ContactEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(
+      
       (params: Params) => {
+
         this.id = params['id'];
         if (!this.id){
           this.editMode = false;
+          this.id = (this.contactService.getMaxId() + 1).toString();
+          console.log(this.id);
           return
         }
 
@@ -41,6 +45,8 @@ export class ContactEditComponent implements OnInit {
         if(this.groupContacts){
           this.groupContacts = JSON.parse(JSON.stringify(this.originalContact.group.slice()));
         }
+
+
       }
     );
   }
@@ -63,7 +69,6 @@ export class ContactEditComponent implements OnInit {
     } else{
       this.contactService.addContact(newContact);
     }
-    console.log(values);
     this.onCancel();
   }
 

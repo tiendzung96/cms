@@ -26,8 +26,10 @@ export class ContactService {
     if (newContact === null){
       return;
     } 
+    this.maxContactId = this.getMaxId();
     this.maxContactId++;
     newContact.id = this.maxContactId.toString();
+    console.log(this.maxContactId);
     this.contacts.push(newContact);
     const contactsListClone = this.contacts.slice();
     this.contactListChangedEvent.next(contactsListClone);
