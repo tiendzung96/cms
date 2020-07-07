@@ -28,8 +28,6 @@ export class ContactEditComponent implements OnInit {
         this.id = params['id'];
         if (!this.id){
           this.editMode = false;
-          this.id = (this.contactService.getMaxId() + 1).toString();
-          console.log(this.id);
           return
         }
 
