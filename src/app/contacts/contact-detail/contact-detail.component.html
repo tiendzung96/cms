@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <h2>{{ contact?.name }}</h2>
-                <div class="pull-left">
+                <div class="pull-left" *ngIf="contact?.imageUrl">
                     <img [src]="contact?.imageUrl" alt="{{ contact?.name }}" class="img-responsive" style = "max-height:100px;">
                 </div>
                 <div class="pull-right btn-toolbar">
@@ -18,10 +18,10 @@
                 <div class="list-group-item-heading">
                     Phone: {{ contact?.phone }}
                 </div>
-                <div class="list-group-item-heading">
-                    Contacts in Team: 
+                <div class="list-group-item-heading" *ngIf="contact?.group && contact?.group.length > 0" >
+                    Contacts in Team:
                     <ul>
-                        <li  *ngFor= "let contact of contact?.group">{{ contact.name }}</li>
+                        <li  *ngFor= "let contact of contact?.group">{{ contact?.name }}</li>
                     </ul>
                 </div>
             </div>

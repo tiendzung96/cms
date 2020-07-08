@@ -19,7 +19,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
 
   constructor(private documentService: DocumentService, private router: Router,
     private route: ActivatedRoute) {
-    this.documents = this.documentService.getDocuments();
+    this.documentService.getDocuments();
   }
 
   ngOnInit() {

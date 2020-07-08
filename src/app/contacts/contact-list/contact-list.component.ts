@@ -10,14 +10,14 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent implements OnInit, OnDestroy {
-  
+
   contacts: Contact[] = [];
   subscription: Subscription;
 
   term: string;
 
   constructor(private contactService: ContactService, private router: Router, private route: ActivatedRoute ) {
-    this.contacts = contactService.getContacts();
+    this.contactService.getContacts();
   }
 
   ngOnInit() {
