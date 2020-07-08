@@ -22,7 +22,7 @@ export class ContactEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(
-      
+
       (params: Params) => {
 
         this.id = params['id'];
@@ -54,7 +54,7 @@ export class ContactEditComponent implements OnInit {
   onRemoveItem(idx: number){
     if (idx < 0 || idx >= this.groupContacts.length)
       return;
-    
+
     this.groupContacts.splice(idx, 1);
     this.invalidGroupContact = false;
   }
@@ -75,7 +75,7 @@ export class ContactEditComponent implements OnInit {
       return true;
     }
 
-    if (newContact.id === this.contact.id){
+    if (this.contact && newContact.id === this.contact.id){
       return true;
     }
 
