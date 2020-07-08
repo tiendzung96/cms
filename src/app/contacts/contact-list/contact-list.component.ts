@@ -14,6 +14,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
   contacts: Contact[] = [];
   subscription: Subscription;
 
+  term: string;
+
   constructor(private contactService: ContactService, private router: Router, private route: ActivatedRoute ) {
     this.contacts = contactService.getContacts();
   }
@@ -34,4 +36,9 @@ export class ContactListComponent implements OnInit, OnDestroy {
   onNewContact(){
     this.router.navigate(['new'], {relativeTo: this.route});
   }
+
+  onKeyPress(value: string){
+    this.term = value;
+  }
+
 }
