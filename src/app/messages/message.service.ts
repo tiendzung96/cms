@@ -15,15 +15,17 @@ export class MessageService {
     // this.messages = MOCKMESSAGES;
   }
 
+  sortAndSend(){
+    this.messages.sort((a, b) => a.id > b.id ? 1 : b.id > a.id ? -1 : 0);
+    this.messageListChangedEvent.next(this.messages.slice());
+  }
+
   getMessages() {
-    // return this.messages.slice();
-    this.http.get<Message[]>('https://rkjcms-9056c.firebaseio.com/messages.json')
+    this.http.get<{message: string, messages: Message[]}>('http://localhost:3000/messages')
     .subscribe(
-      (messages: Message[]) =>{
-        this.messages = messages;
-        this.maxMessageId = this.getMaxId();
-        this.messages.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
-        this.messageListChangedEvent.next(this.messages.slice());
+      (responseData) =>{
+        this.messages = responseData.messages;
+        this.sortAndSend();
       },
       (error: any) => {
         console.log(error);
@@ -35,7 +37,7 @@ export class MessageService {
   storeMessages(){
     let messages = JSON.stringify(this.messages);
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    this.http.put('https://rkjcms-9056c.firebaseio.com/messages.json', messages, { headers: headers })
+    this.http.put('http://localhost:3000/messages', messages, { headers: headers })
     .subscribe(
       () =>{
         this.messageListChangedEvent.next(this.messages.slice());
@@ -44,23 +46,30 @@ export class MessageService {
   }
 
   getMessage(id: string){
-    for (const message of this.messages){
-      if (message.id === id){
-        return message;
-      }
-    }
-    return null;
+    return this.http.get<{ message: string, messages: Message }>('http://localhost:3000/messages/' + id);
   }
 
   addMessage(message: Message){
-    if (!message){
+    if (!message) {
       return;
     }
-    this.maxMessageId++;
-    message.id = this.maxMessageId.toString();
 
-    this.messages.push(message);
-    this.storeMessages();
+    //make sure id of the new message is empty
+    message.id = '';
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    //add to database
+    this.http.post<{message: string, messages: Message}>('http://localhost:3000/messages', message, { headers: headers })
+    .subscribe(
+      (responseData) => {
+        //add new contact to contacts
+        message._id = responseData.messages._id;
+        message.id = responseData.messages.id;
+        this.messages.push(responseData.messages);
+        this.sortAndSend();
+      }
+    )
   }
 
   getMaxId(): number{

@@ -31,7 +31,12 @@ export class ContactEditComponent implements OnInit {
           return
         }
 
-        this.originalContact = this.contactService.getContact(this.id);
+        this.contactService.getContact(this.id)
+          .subscribe(
+            response => {
+              this.originalContact = response.contact;
+            }
+          );
 
         if(!this.originalContact){
           return
@@ -61,7 +66,7 @@ export class ContactEditComponent implements OnInit {
 
   onSubmit(form: NgForm){
     const values = form.value;
-    const newContact = new Contact(this.id, values.name, values.email, values.phone, values.imageUrl, this.groupContacts);
+    const newContact = new Contact('', this.id, values.name, values.email, values.phone, values.imageUrl, this.groupContacts);
     if (this.editMode){
       this.contactService.updateContact(this.originalContact, newContact)
     } else{

@@ -28,7 +28,12 @@ export class DocumentEditComponent implements OnInit {
           return
         }
 
-        this.originalDocument = this.documentService.getDocument(this.id);
+        this.documentService.getDocument(this.id)
+          .subscribe(
+            response => {
+              this.originalDocument = response.document;
+            }
+          );
 
         if(!this.originalDocument){
           return

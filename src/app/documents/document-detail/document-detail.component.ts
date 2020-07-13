@@ -15,9 +15,9 @@ export class DocumentDetailComponent implements OnInit {
   nativeWindow: any;
 
 
-  constructor(private documentService: DocumentService, 
-              private winRefService : WindRefService, 
-              private route: ActivatedRoute, 
+  constructor(private documentService: DocumentService,
+              private winRefService : WindRefService,
+              private route: ActivatedRoute,
               private router: Router) {
                 this.nativeWindow = winRefService.getNativeWindow();
                }
@@ -27,7 +27,12 @@ export class DocumentDetailComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.id = params['id'];
-          this.document = this.documentService.getDocument(this.id);
+          this.documentService.getDocument(this.id)
+            .subscribe(
+              response => {
+                this.document = response.document;
+              }
+            )
         }
       );
   }
