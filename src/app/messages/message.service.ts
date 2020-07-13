@@ -66,7 +66,7 @@ export class MessageService {
         //add new contact to contacts
         message._id = responseData.messages._id;
         message.id = responseData.messages.id;
-        this.messages.push(responseData.messages);
+        this.messages.push(message);
         this.sortAndSend();
       }
     )
