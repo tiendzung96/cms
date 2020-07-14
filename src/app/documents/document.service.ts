@@ -2,7 +2,8 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { MOCKDOCUMENTS } from 'src/app/documents/MOCKDOCUMENTS';
 import { Document } from './document.model';
 import { Subject } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -96,8 +97,9 @@ export class DocumentService {
     this.http.post<{message: string, document: Document}>('http://localhost:3000/documents', document, { headers: headers })
     .subscribe(
       (responseData) => {
+        document.id = responseData.document.id;
         //add new contact to contacts
-        this.documents.push(responseData.document);
+        this.documents.push(document);
         this.sortAndSend();
       }
     )
@@ -149,7 +151,7 @@ export class DocumentService {
       return;
     }
 
-    const pos = this.documents.indexOf(document);
+    const pos = this.documents.findIndex(d => d.id === document.id);
     if (pos < 0){
       return;
     }

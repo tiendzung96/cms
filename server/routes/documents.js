@@ -79,7 +79,7 @@ router.put('/:id', (req, res, next) => {
 
     Document.updateOne({
       id: req.params.id
-    }, contact)
+    }, document)
     .then(result => {
       res
         .status(204)
@@ -96,7 +96,7 @@ router.put('/:id', (req, res, next) => {
     res.status(500).json({
       message: 'Document not found.',
       error: {
-        contact: 'Document not found'
+        document: 'Document not found'
       }
     });
   });

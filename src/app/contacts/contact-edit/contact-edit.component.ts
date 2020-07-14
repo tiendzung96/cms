@@ -28,28 +28,26 @@ export class ContactEditComponent implements OnInit {
         this.id = params['id'];
         if (!this.id){
           this.editMode = false;
-          return
+          return;
         }
 
         this.contactService.getContact(this.id)
           .subscribe(
             response => {
               this.originalContact = response.contact;
+              if(!this.originalContact){
+                return;
+              }
+
+              this.editMode =  true;
+              this.contact = JSON.parse(JSON.stringify(this.originalContact));
+
+              if(this.groupContacts){
+                this.groupContacts = JSON.parse(JSON.stringify(this.originalContact.group.slice()));
+              }
+
             }
           );
-
-        if(!this.originalContact){
-          return
-        }
-
-        this.editMode =  true;
-        this.contact = JSON.parse(JSON.stringify(this.originalContact));
-
-        if(this.groupContacts){
-          this.groupContacts = JSON.parse(JSON.stringify(this.originalContact.group.slice()));
-        }
-
-
       }
     );
   }

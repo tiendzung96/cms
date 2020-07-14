@@ -32,15 +32,16 @@ export class DocumentEditComponent implements OnInit {
           .subscribe(
             response => {
               this.originalDocument = response.document;
+              if(!this.originalDocument){
+                return
+              }
+
+              this.editMode =  true;
+              this.document = JSON.parse(JSON.stringify(this.originalDocument));
             }
           );
 
-        if(!this.originalDocument){
-          return
-        }
 
-        this.editMode =  true;
-        this.document = JSON.parse(JSON.stringify(this.originalDocument));
       }
     );
   }
